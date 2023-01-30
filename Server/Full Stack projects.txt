@@ -10,3 +10,8 @@ packages installed:
 8. bcrypt
 9. gridfs-stream multer multer-gridfs-storage
 10. helmet
+
+
+Methods:
+
+1. salt - genSalt()
