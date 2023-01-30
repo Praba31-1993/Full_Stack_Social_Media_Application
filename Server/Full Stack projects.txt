@@ -1,0 +1,12 @@
+packages installed:
+
+1. cors
+2. dotenv
+3. express
+4. body-parser
+5. morgan
+6. jsonwebtoken
+7. mongoose
+8. bcrypt
+9. gridfs-stream multer multer-gridfs-storage
+10. helmet
