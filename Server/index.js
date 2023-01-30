@@ -6,8 +6,13 @@ import dotenv from "dotenv";
 import helmet from "helmet";
 import morgan from "morgan";
 import path from "path";
+import multer from "multer";
 import { fileURLToPath } from "url";
-import { register } from "./controllers/auth";
+import authRoutes from "./routes/auth.js"
+import userroutes from "./routes/users.js"
+import { register } from "./controllers/auth.js";
+// const crypto = require('crypto')
+import crypto from "crypto"
 
 
 /* CONFIGURATIONS */
@@ -23,6 +28,10 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
+
+
+const key = crypto.randomBytes(32).toString('hex')
+// console.log("keu", key);
 /* FILE STORAGE */
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -36,7 +45,7 @@ const upload = multer({ storage });
 
 
 /* ROUTES WITH FILES */
-app.post("/auth/register", upload.single("picture"), register);
+app.post("/auth/register",  register);
 
 // ROUTES
 app.use("/auth", authRoutes)
@@ -44,6 +53,9 @@ app.use("/users", userroutes)
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
+console.log("PORT", PORT);
+mongoose.set('strictQuery', false);
+console.log("URL", process.env.MONGO_URL);
 mongoose
   .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
